@@ -5,10 +5,10 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (req: NextRequest) => {
   try {
-    const { userId } = auth()
+    const { userId } = auth();
 
     if (!userId) {
-      return
+      return new NextResponse("Unauthorized", { status: 401 });
     }
 
     await connectToDB();
@@ -23,11 +23,11 @@ export const GET = async (req: NextRequest) => {
       await user.save();
     }
 
-    return new NextResponse(JSON.stringify(user), {
+    return NextResponse.json(user, {
       status: 200,
     });
   } catch (error) {
     console.log("[user_GET]", error);
     return new NextResponse("Internal error", { status: 500 });
   }
-}
+};

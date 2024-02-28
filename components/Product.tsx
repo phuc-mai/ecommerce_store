@@ -1,18 +1,23 @@
 "use client";
 
+import { useSession } from "@clerk/nextjs";
 import { Heart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
+import Loader from "./Loader";
+
 const Product = ({ product }: { product: ProductType }) => {
+  const { session } = useSession();
   const [user, setUser] = useState<UserType | null>(null);
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   
   const getUser = async () => {
     try {
+      setLoading(true);
       const res = await fetch("/api/users");
       const data = await res.json();
       setUser(data);
@@ -24,8 +29,10 @@ const Product = ({ product }: { product: ProductType }) => {
   };
 
   useEffect(() => {
-    getUser();
-  }, []);
+    if (session) {
+      getUser();
+    }
+  }, [session]);
 
   const router = useRouter();
 
@@ -36,7 +43,7 @@ const Product = ({ product }: { product: ProductType }) => {
         router.push("/sign-in");
         return;
       } else {
-        const res = await fetch("/api//users/wishlist", {
+        const res = await fetch("/api/users/wishlist", {
           method: "POST",
           body: JSON.stringify({
             favoriteItem: product._id,
@@ -51,7 +58,7 @@ const Product = ({ product }: { product: ProductType }) => {
   };
 
   return loading ? (
-    <></>
+    <Loader />
   ) : (
     <Link
       href={`/products/${product._id}`}
