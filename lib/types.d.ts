@@ -29,3 +29,10 @@ type UserType = {
   createdAt: string;
   updatedAt: string;
 };
+
+type orderItemType = {
+  product: ProductType;
+  quantity: number;
+  color: string;
+  size: string;
+};

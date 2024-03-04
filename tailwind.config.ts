@@ -71,6 +71,13 @@ const config: Config = {
           fontWeight: "500",
         },
       ],
+      "small-bold": [
+        "14px",
+        {
+          lineHeight: "140%",
+          fontWeight: "700",
+        },
+      ],
       "small-medium": [
         "14px",
         {

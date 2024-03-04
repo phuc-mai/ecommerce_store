@@ -1,6 +1,5 @@
 "use client";
 
-import Navbar from "@/components/Navbar";
 import useCart from "@/lib/hooks/useCart";
 import { useUser } from "@clerk/nextjs";
 import { MinusCircle, PlusCircle, Trash } from "lucide-react";
@@ -21,12 +20,11 @@ const Cart = () => {
   const total = subTotalRounded + tax;
 
   const { user } = useUser();
-  if (!user) return null;
 
   const customer = {
-    clerkId: user.id,
-    name: user.firstName + " " + user.lastName,
-    email: user.emailAddresses[0].emailAddress,
+    clerkId: user?.id,
+    name: user?.firstName + " " + user?.lastName,
+    email: user?.emailAddresses[0].emailAddress,
   };
 
   const handleCheckout = async () => {
@@ -46,8 +44,6 @@ const Cart = () => {
 
   return (
     <>
-      <Navbar />
-
       <div className="flex gap-20 py-16 px-10">
         <div className="w-2/3">
           <h1 className="text-heading3-bold">Shopping Cart</h1>

@@ -10,8 +10,6 @@ const ProductPage = async ({ params }: { params: { productId: string } }) => {
 
   return (
     <>
-      <Navbar />
-
       <div className="flex justify-center items-start gap-16 py-10 px-5 max-md:flex-col max-md:items-center">
         <Gallery productImages={productDetails.media} />
         <ProductInfo productDetails={productDetails} />
