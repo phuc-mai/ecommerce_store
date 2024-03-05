@@ -5,16 +5,23 @@ import { UserButton, useUser } from "@clerk/nextjs";
 import { CircleUserRound, Menu, Search, ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 
 const Navbar = () => {
+  const pathname = usePathname();
   const router = useRouter();
   const cart = useCart();
   const { user } = useUser();
 
   const [dropdownMenu, setDropdownMenu] = useState(false);
   const [query, setQuery] = useState("");
+
+  const navLinks = [
+    { href: "/", label: "Home" },
+    { href: "/wishlist", label: "Wishlist" },
+    { href: "/orders", label: "Orders" },
+  ];
 
   return (
     <div className="sticky top-0 z-10 py-2 px-10 flex justify-between items-center bg-white">
@@ -23,15 +30,11 @@ const Navbar = () => {
       </Link>
 
       <div className="flex gap-4 max-lg:hidden">
-        <Link href="/" className="text-base-bold hover:text-red-1">
-          Home
-        </Link>
-        <Link href="/wishlist" className="text-base-bold hover:text-red-1">
-          Wishlist
-        </Link>
-        <Link href="/orders" className="text-base-bold hover:text-red-1">
-          Orders
-        </Link>
+        {navLinks.map((link) => (
+          <Link href={link.href} className={`text-base-bold hover:text-red-1 ${pathname === link.href && "text-red-1"}`}>
+            {link.label}
+          </Link>
+        ))}
       </div>
 
       <div className="flex gap-5 px-3 py-1 border border-grey-2 rounded-lg">

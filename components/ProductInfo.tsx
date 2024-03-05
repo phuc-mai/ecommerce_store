@@ -6,8 +6,8 @@ import { useState } from "react";
 
 const ProductInfo = ({ productDetails }: { productDetails: ProductType }) => {
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
-  const [selectedColor, setSelectedColor] = useState<string>("");
-  const [selectedSize, setSelectedSize] = useState<string>("");
+  const [selectedColor, setSelectedColor] = useState<string>(productDetails.colors[0]);
+  const [selectedSize, setSelectedSize] = useState<string>(productDetails.sizes[0]);
   const [quantity, setQuantity] = useState<number>(1);
 
   const cart = useCart();

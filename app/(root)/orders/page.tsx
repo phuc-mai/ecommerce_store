@@ -14,7 +14,7 @@ const Orders = async () => {
           <p className="text-body-bold my-5">No orders found</p>
         ))}
 
-      <div className="flex gap-10">
+      <div className="flex flex-col gap-10">
         {orders?.map((order: any) => (
           <div className="flex flex-col gap-8 p-4 hover:bg-grey-1">
             <div key={order._id} className="flex gap-20 max-md:flex-col max-md:gap-3">

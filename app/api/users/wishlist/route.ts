@@ -14,9 +14,9 @@ export const POST = async (req:NextRequest) => {
 
     await connectToDB();
 
-    const { favoriteItem } = await req.json();
+    const { productId } = await req.json();
 
-    if (!favoriteItem) {
+    if (!productId) {
       return new NextResponse("Favorite item is required", {
         status: 400,
       });
@@ -28,14 +28,14 @@ export const POST = async (req:NextRequest) => {
       return new NextResponse("User not found", { status: 404 });
     }
 
-    const isFavorite = user.wishlist.includes(favoriteItem);
+    const isFavorite = user.wishlist.includes(productId);
 
     if (isFavorite) {
       user.wishlist = user.wishlist.filter(
-        (item: string) => item !== favoriteItem
+        (id: string) => id !== productId
       );
     } else {
-      user.wishlist.push(favoriteItem);
+      user.wishlist.push(productId);
     }
 
     await user.save();
